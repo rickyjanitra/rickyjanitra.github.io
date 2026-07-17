@@ -1140,9 +1140,12 @@ input, select, textarea {
 			-ms-transition-delay: 0.75s;
 			transition-delay: 0.75s;
 			background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("../../images/overlay.png");
-			background-size: auto, 256px 256px;
-			background-position: center, center;
-			background-repeat: no-repeat, repeat;
+			background-size: auto,
+ 256px 256px;
+			background-position: center,
+ center;
+			background-repeat: no-repeat,
+ repeat;
 			z-index: 2;
 		}
 
@@ -1656,3 +1659,371 @@ input, select, textarea {
 		body.is-preload #footer {
 			opacity: 0;
 		}
+
+		/* Background Video */
+
+#bg {
+	display: none;
+}
+
+#bg-video {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+
+	z-index: -2;
+
+	opacity: 1;
+}
+
+body:before{
+	background: rgba(0,0,0,.45);
+}
+
+/* ===========================
+   PROJECT GRID
+=========================== */
+
+.project-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1.5rem;
+    margin-top:2rem;
+}
+
+
+
+/* ===== PROJECT CARD ===== */
+
+.project-card{
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.project-card img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    display:block;
+}
+
+.project-card::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:120px;
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.92),
+        rgba(0,0,0,.65),
+        rgba(0,0,0,0)
+    );
+}
+
+.project-card h3{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:44px;
+
+    margin:0;
+
+    color:#fff;
+    font-size:1.05rem;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+
+    z-index:5;
+}
+
+.project-card p{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:18px;
+
+    margin:0;
+
+    color:rgba(255,255,255,.75);
+    font-size:.82rem;
+
+    z-index:5;
+}
+
+/* ===========================
+   EXHIBITION TIMELINE
+=========================== */
+
+.timeline{
+    margin-top:2rem;
+}
+
+.timeline-item{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:2rem;
+    padding:1.8rem 0;
+    border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+.timeline-item:last-child{
+    border-bottom:none;
+}
+
+.timeline .year{
+    font-size:1.3rem;
+    font-weight:700;
+    color:#ffffff;
+    opacity:.9;
+}
+
+.timeline .content h3{
+    margin:0 0 .4rem;
+    font-size:1.05rem;
+}
+
+.timeline .content p{
+    margin:0;
+    opacity:.75;
+    line-height:1.7;
+}
+
+@media screen and (max-width:736px){
+
+.timeline-item{
+    grid-template-columns:1fr;
+    gap:.8rem;
+}
+
+.timeline .year{
+    font-size:1rem;
+}
+
+}
+
+/* ===========================
+   ARTWORKS GRID
+=========================== */
+
+.artworks-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1.5rem;
+    margin-top:2rem;
+}
+
+@media screen and (max-width:980px){
+
+.artworks-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media screen and (max-width:736px){
+
+.artworks-grid{
+    grid-template-columns:1fr;
+}
+
+}
+/* ===========================
+   ARTWORKS PAGE
+=========================== */
+
+#main article#artworks{
+    width: 88rem;
+    max-width: calc(100vw - 6rem);
+}
+
+#main article video{
+    width:100%;
+    display:block;
+    margin:0 0 2rem 0;
+    border-radius:4px;
+}
+
+/* ====================================
+   UNIVERSAL ARTWORK DETAIL
+==================================== */
+
+#detail-media{
+
+    margin-bottom:2rem;
+
+}
+
+#detail-media img,
+#detail-media video{
+
+    width:100%;
+
+    display:block;
+
+    border-radius:4px;
+
+}
+
+.artwork-meta{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:1.5rem;
+
+    margin-top:2rem;
+
+}
+
+.artwork-meta p{
+
+    margin:0;
+
+}
+
+@media screen and (max-width:736px){
+
+.artwork-meta{
+
+    grid-template-columns:1fr;
+
+}
+
+}
+
+/* ===== Artwork Viewer ===== */
+
+.media-viewer{
+    position:relative;
+}
+
+.media-nav{
+
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(0,0,0,.55);
+    color:#fff;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    z-index:20;
+
+}
+
+#media-prev{
+
+    left:15px;
+
+}
+
+#media-next{
+
+    right:15px;
+
+}
+
+#media-counter{
+
+    margin-top:12px;
+
+    text-align:center;
+
+    opacity:.6;
+
+    font-size:.85rem;
+
+}
+
+.media-viewer{
+
+    position:relative;
+
+    cursor:pointer;
+
+}
+
+#media-dots{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+
+    margin:25px 0;
+
+}
+
+#media-dots span{
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.25);
+
+    transition:.3s;
+
+}
+
+#media-dots span.active{
+
+    background:#fff;
+
+    transform:scale(1.3);
+
+}
+
+.artworkSwiper{
+
+    width:100%;
+    margin-bottom:25px;
+
+}
+
+.artworkSwiper img{
+
+    width:100%;
+    display:block;
+
+}
+
+.artworkSwiper video{
+
+    width:100%;
+    display:block;
+
+}
+
+.swiper-pagination-bullet{
+
+    background:#777;
+
+    opacity:1;
+
+}
+
+.swiper-pagination-bullet-active{
+
+    background:#fff;
+
+}

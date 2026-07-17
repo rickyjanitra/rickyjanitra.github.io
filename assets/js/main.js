@@ -129,6 +129,12 @@
 						// Show article.
 							setTimeout(function() {
 
+								// Stop videos in previous article
+$currentArticle.find('video').each(function() {
+    this.pause();
+    this.currentTime = 0;
+});
+
 								// Hide current article.
 									$currentArticle.hide();
 
@@ -201,6 +207,12 @@
 
 				var $article = $main_articles.filter('.active');
 
+				// Stop video hanya di article yang sedang aktif
+$article.find('video').each(function () {
+    this.pause();
+    this.currentTime = 0;
+});
+
 				// Article not visible? Bail.
 					if (!$body.hasClass('is-article-visible'))
 						return;
@@ -220,6 +232,12 @@
 
 							// Deactivate article.
 								$article.removeClass('active');
+
+								// Stop all videos
+$article.find('video').each(function() {
+    this.pause();
+    this.currentTime = 0;
+});
 
 							// Hide article, main.
 								$article.hide();
@@ -293,10 +311,25 @@
 
 				// Close.
 					$('<div class="close">Close</div>')
-						.appendTo($this)
-						.on('click', function() {
-							location.hash = '';
-						});
+.appendTo($this)
+.on('click', function() {
+
+    if (
+        location.hash == '#weather' ||
+        location.hash == '#lumiphona' ||
+        location.hash == '#bioacoustic' ||
+        location.hash == '#wwwwaste'
+    ) {
+        location.hash = '#intro';
+    }
+    else if (location.hash == '#artwork-detail') {
+        location.hash = '#artworks';
+    }
+    else {
+        location.hash = '';
+    }
+
+});
 
 				// Prevent clicks from inside article from bubbling.
 					$this.on('click', function(event) {
@@ -308,9 +341,14 @@
 		// Events.
 			$body.on('click', function(event) {
 
-				// Article visible? Hide.
-					if ($body.hasClass('is-article-visible'))
-						$main._hide(true);
+    if ($body.hasClass('is-article-visible')) {
+
+     
+
+        $main._hide(true);
+
+    }
+
 
 			});
 
@@ -343,6 +381,7 @@
 							event.preventDefault();
 							event.stopPropagation();
 
+
 						// Hide.
 							$main._hide();
 
@@ -354,6 +393,16 @@
 						// Prevent default.
 							event.preventDefault();
 							event.stopPropagation();
+
+							// Stop videos only when opening artwork detail
+						if (location.hash == '#artwork-detail') {
+
+    $('#detail-media video').each(function () {
+        this.pause();
+        this.currentTime = 0;
+    });
+
+}
 
 						// Show article.
 							$main._show(location.hash.substr(1));
@@ -398,4 +447,133 @@
 						$main._show(location.hash.substr(1), true);
 					});
 
+					/* ===================================
+   Artwork Detail
+=================================== */
+
+$('.artwork-item').on('click', function () {
+
+    let id = $(this).data('id');
+
+    let data = artworks[id];
+
+    if (!data) {
+
+        data = {
+            title: $(this).data('title'),
+            year: $(this).data('year'),
+            medium: $(this).data('medium'),
+            duration: $(this).data('duration'),
+            dimensions: $(this).data('size'),
+            media: [{
+                type: $(this).data('media').toLowerCase().endsWith('.mp4') ? 'video' : 'image',
+                src: $(this).data('media'),
+                poster: $(this).data('poster')
+            }]
+        };
+
+    }
+
+    // ==========================
+    // Info
+    // ==========================
+
+    $('#detail-title').text(data.title);
+    $('#detail-year').text(data.year);
+    $('#detail-medium').text(data.medium);
+
+    if (data.duration) {
+        $('#detail-duration').text(data.duration);
+        $('#duration-box').show();
+    } else {
+        $('#duration-box').hide();
+    }
+
+    if (data.dimensions) {
+        $('#detail-size').text(data.dimensions);
+        $('#size-box').show();
+    } else {
+        $('#size-box').hide();
+    }
+
+    // ==========================
+    // Gallery
+    // ==========================
+
+    let html = '';
+
+    data.media.forEach(function(item){
+
+        html += '<div class="swiper-slide">';
+
+        if(item.type === "image"){
+
+            html += '<img src="'+item.src+'" alt="">';
+
+        }
+
+        else if(item.type === "video"){
+
+            html +=
+            '<video controls width="100%" poster="'+(item.poster || '')+'">' +
+            '<source src="'+item.src+'" type="video/mp4">' +
+            '</video>';
+
+        }
+
+        html += '</div>';
+
+    });
+
+    $('#detail-media').html(html);
+
+    if(window.artworkSwiper){
+        window.artworkSwiper.destroy(true,true);
+    }
+
+    window.artworkSwiper = new Swiper('.artworkSwiper',{
+
+        loop:false,
+
+        observer:true,
+        observeParents:true,
+
+        keyboard:{
+            enabled:true
+        },
+
+        pagination:{
+            el:'.swiper-pagination',
+            clickable:true
+        },
+
+        on:{
+
+            slideChange:function(){
+
+                $('#detail-media video').each(function(){
+
+                    this.pause();
+                    this.currentTime = 0;
+
+                });
+
+            }
+
+        }
+
+    });
+
+    setTimeout(function(){
+
+        window.artworkSwiper.update();
+
+    },300);
+
+});
+
+
+
 })(jQuery);
+
+
