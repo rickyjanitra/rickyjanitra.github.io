@@ -756,19 +756,41 @@ A curated collection of digital still images available in a variety of print for
 <script src="assets/js/main.js"></script>
 
 <script>
-window.addEventListener("load", async () => {
-    const bg = document.getElementById("bg-video");
 
-    bg.muted = true;
-    bg.defaultMuted = true;
-    bg.playsInline = true;
+const bgVideo = document.getElementById("bg-video");
 
-    try {
-        await bg.play();
-    } catch (e) {
-        console.log("Autoplay gagal:", e);
+bgVideo.muted = true;
+bgVideo.defaultMuted = true;
+bgVideo.playsInline = true;
+
+function startBG(){
+
+    bgVideo.play().catch(()=>{
+
+        document.body.addEventListener("touchstart",function playOnce(){
+
+            bgVideo.play();
+
+            document.body.removeEventListener("touchstart",playOnce);
+
+        });
+
+    });
+
+}
+
+window.addEventListener("load",startBG);
+
+document.addEventListener("visibilitychange",()=>{
+
+    if(!document.hidden){
+
+        startBG();
+
     }
+
 });
+
 </script>
 	</body>
 </html>
