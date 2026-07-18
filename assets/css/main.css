@@ -2028,7 +2028,11 @@ body:before{
 
 }
 
-#bg-video{
-    pointer-events:none;
-    touch-action:none;
+#bg-video::-webkit-media-controls{
+    display:none !important;
+}
+
+#bg-video::-webkit-media-controls-start-playback-button{
+    display:none !important;
+    -webkit-appearance:none;
 }
