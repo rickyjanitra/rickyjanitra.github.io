@@ -2027,3 +2027,8 @@ body:before{
     background:#fff;
 
 }
+
+#bg-video{
+    pointer-events:none;
+    touch-action:none;
+}
