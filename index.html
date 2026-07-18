@@ -748,5 +748,15 @@ A curated collection of digital still images available in a variety of print for
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
 
+<script>
+window.addEventListener("load", () => {
+    const bg = document.getElementById("bg-video");
+    if (bg) {
+        bg.muted = true;
+        bg.playsInline = true;
+        bg.play().catch(() => {});
+    }
+});
+</script>
 	</body>
 </html>
